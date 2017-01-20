@@ -38,6 +38,8 @@ The model was only trained through 370 images gathered througout the internet, a
 
 ![Image](images/Screenshot from 2017-01-16 23-16-27.png)
 
+it correctly classsifies the test image, the model is 90% sure it is the philippines flag
+
 
 
 

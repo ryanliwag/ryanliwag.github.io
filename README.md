@@ -33,6 +33,8 @@ here are the results.
 ![Image](images/Screenshot from 2017-01-16 23-13-26.png)
 
 final results and misclassified 4 images. test_trained.py script can be used on a single image to test the produced model.
+The model was only trained through 370 images gathered througout the internet, and yielded a 94% accuracy from the testing set. this is using pretrained weights of googles inceptionv3 model. 
+
 
 ![Image](images/Screenshot from 2017-01-16 23-16-27.png)
 

@@ -1,28 +1,40 @@
-# Site specific settings
-title: "Title to this website"
-name: "Website name"
-keywords: "Key, words, about, this, website"
-baseurl: "/darcli"
-url: "http://website.com"
-description: "Website description"
-cover: "/assets/img/cover.svg"
-fanpage_id: ""
+# visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
 
-# Site general settings
-lang: "en"
-lang_alternate: "pt_BR"
-ssl: false # It will redirect to https
-
-# Media
-# Just the shortname:
-# facebook: lampiaosec # Rigth
-# facebook: facebook.com/lampiaosec # Wrong
-disqus: test
-twitter: 
-facebook: 
-github: 
-google:
-
-# Build settings
+paginate: 10 # pagination based on number of posts
+paginate_path: "page:num"
+exclude: ["README.md"] # files to exclude
+highlighter: rouge
 markdown: kramdown
-permalink: /:categories/:title/
+disqus: dbyll
+google_analytics: dbyll
+title: dbyll
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      title: dbyll
+
+description: Stylish Jekyll Theme
+author:
+  name: dbyll
+  email: dbyll@ismaildemirbilek.com
+  github: dbtek
+  twitter: dbtek
+  pinterest: asd123
+  linkedin: asd123
+  bio: Your stylish, minimalist theme!
+  email_md5: 726351295ec82e145928582f595aa3aa
+
+rss_path: feed.xml
+categories_path: categories.html
+tags_path: tags.html
+
+# set it as url of an image
+# sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
+
+BASE_PATH:
+
+plugins:
+  - jekyll-paginate

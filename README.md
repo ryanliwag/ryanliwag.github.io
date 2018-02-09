@@ -1,34 +1,37 @@
-# Darcli
+dbyll
+=====
 
-## Demo
+Open source stylish, minimalistic theme for jekyll.  
+Demo: http://dbtek.github.io/dbyll/
 
-You can see this theme on [gjuniioor.github.io/darcli](https://gjuniioor.github.io/darcli)
+## New
+- Dbyll for Ghost is now available. Get it [here](https://github.com/dbtek/dbyll-ghost) now.
+- :new: Check out [Paper](https://github.com/dbtek/paper), new Material Design Jekyll theme.
 
-## Screenshot
+### Features
+- Responsive layout.
+- Supports tags and categories.
+- Social profile and bio of author.
+- Bootstrap based.
+- Glyphicon and Font-Awesome Icons.
+- Pagination.
+- Syntax highlighting with pygments.
+- Disqus comments.
+- :new: Custom sidebar background image.
 
-![Screenshot of the them](assets/img/screenshot.png)
 
-## Why the name?
+### Download
+* [Download dbyll](https://github.com/dbtek/dbyll/archive/master.zip)
 
-It's just a joke: `dark + cli`.
+### Install
+- You need to have [ruby](https://www.ruby-lang.org/en/documentation/installation/) installed in your system.
+- Install bundler which helps in specifying and installing dependencies of any Ruby project. ```gem install bundler```
+- Go to the root of the repo and run this - ```bundle install```
+- Then - ```bundle exec jekyll serve```
 
-## Features
+### Screenshots
+![dbyll-screenshot](assets/media/dbyll-ss.png)
 
-* Categories
-* Disqus comments
-* SEO
-	* Description
-	* Keywords
-	* Open Cards to twitter, facebook, linkedin, google+ and others
-* Code post (but no highligth :] )
-* Atom **AND** RSS feeds
+### License
+- [MIT](http://opensource.org/licenses/MIT)
 
-## Warnings
-
-This is a theme intended to use to [lampiaosec website](https://lampiaosec.github.io) and after was converted to a general theme to jekyll.
-
-So, any questions, can you contact me ([@gjuniioor](https://github.com/gjuniioor)) or open a [issue](https://github.com/gjuniioor/darcli/issuesi).
-
-## License
-
-This theme is under [GPL3](assets/LICENSE).

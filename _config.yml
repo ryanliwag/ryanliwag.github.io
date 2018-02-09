@@ -1,40 +1,37 @@
-# visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
+title: Personal websites for projects
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+permalink: ':title/'
+baseurl: "/home" # the subpath of your site, e.g. /blog
+url: "https://ryanliwag.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+site-twitter: #if your site has a twitter account, enter it here
 
-paginate: 10 # pagination based on number of posts
-paginate_path: "page:num"
-exclude: ["README.md"] # files to exclude
-highlighter: rouge
+# Author Settings
+author: Ryan Liwag # add your name
+author-img: main_pic.jpg # add your photo
+about-author: Aspiring Software engineer and Artificial Intelligence enthusiast. I like to work on interesting and challenging problems. "I have no special talents just passionetly curious" - Albert Einstein # add description
+twitter: # add your Twitter handle
+facebook: # add your Facebook handle
+github: ryanliwag # add your Github handle
+linkedin: # add your Linkedin handle
+email: # add your Email address
+
+# Disqus
+discus-identifier: mr-brown # add your discus identifier
+
+# Tracker
+analytics: # Google Analytics
+
+# Build Settings
 markdown: kramdown
-disqus: dbyll
-google_analytics: dbyll
-title: dbyll
-
-defaults:
-  -
-    scope:
-      path: "" # empty string for all files
-    values:
-      title: dbyll
-
-description: Stylish Jekyll Theme
-author:
-  name: dbyll
-  email: dbyll@ismaildemirbilek.com
-  github: dbtek
-  twitter: dbtek
-  pinterest: asd123
-  linkedin: asd123
-  bio: Your stylish, minimalist theme!
-  email_md5: 726351295ec82e145928582f595aa3aa
-
-rss_path: feed.xml
-categories_path: categories.html
-tags_path: tags.html
-
-# set it as url of an image
-# sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
-
-BASE_PATH:
-
 plugins:
+  - jekyll-sitemap
   - jekyll-paginate
+  - jemoji
+
+paginate: 10
+paginate_path: "/page/:num"
+
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]

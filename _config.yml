@@ -11,12 +11,12 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: Ryan Liwag # add your name
 author-img: main_pic.jpg # add your photo
-about-author: Aspiring Software engineer and Artificial Intelligence enthusiast. I like to work on interesting and challenging problems. "I have no special talents just passionetly curious" - Albert Einstein # add description
-twitter: # add your Twitter handle
-facebook: # add your Facebook handle
+about-author: | Aspiring Software engineer and a Dedicated Weeb | I love working on anything related to AI and ML | I have no special Talents, but I do have crippling anxiety |
+twitter: https://twitter.com/ryanorchous
+facebook: https://www.facebook.com/ryan.joshua.75
 github: ryanliwag # add your Github handle
-linkedin: # add your Linkedin handle
-email: # add your Email address
+linkedin: https://www.linkedin.com/in/ryan-joshua-liwag-4a6124138/
+email: rjhontomin@gmail.com
 
 # Disqus
 discus-identifier: mr-brown # add your discus identifier

@@ -2,56 +2,64 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to Jekyll! - Personal websites for projects</title>
+	<title>Noob Forecasting using MLP - Personal websites for projects</title>
 
   <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
 
     <meta content="Personal websites for projects" property="og:site_name">
   
-    <meta content="Welcome to Jekyll!" property="og:title">
+    <meta content="Noob Forecasting using MLP" property="og:title">
   
   
     <meta content="article" property="og:type">
   
   
-    <meta content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes." property="og:description">
+    <meta content="post for my forecasting attempt at predicting train traffic using MLP" property="og:description">
   
   
-    <meta content="http://localhost:4000/welcome-to-jekyll/" property="og:url">
+    <meta content="http://localhost:4000/Noob-Forecasting-MLP/" property="og:url">
   
   
-    <meta content="2017-04-06T18:32:20+08:00" property="article:published_time">
+    <meta content="2018-01-25T09:32:20+08:00" property="article:published_time">
     <meta content="http://localhost:4000/about/" property="article:author">
   
   
-    <meta content="/img/main_pic.jpg" property="og:image">
+    <meta content="http://localhost:4000/assets/img/project-noob-forecasting-mlp/forecast_thumbnail.jpg" property="og:image">
   
   
     
   
   
+    
+    <meta content="Neural Networks" property="article:tag">
+    
+    <meta content="Time-Series Forecasting" property="article:tag">
+    
+    <meta content="MLP" property="article:tag">
+    
+    <meta content="LSTM" property="article:tag">
     
   
 
   
-    <meta name="twitter:card" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+    <meta name="twitter:card" content="post for my forecasting attempt at predicting train traffic using MLP">
   
     <meta name="twitter:site" content="@">
     <meta name="twitter:creator" content="@ryanorchous">
   
-    <meta name="twitter:title" content="Welcome to Jekyll!">
+    <meta name="twitter:title" content="Noob Forecasting using MLP">
   
   
-    <meta name="twitter:url" content="http://localhost:4000/welcome-to-jekyll/">
+    <meta name="twitter:url" content="http://localhost:4000/Noob-Forecasting-MLP/">
   
   
-    <meta name="twitter:description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+    <meta name="twitter:description" content="post for my forecasting attempt at predicting train traffic using MLP">
   
   
-    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/main_pic.jpg">
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/project-noob-forecasting-mlp/forecast_thumbnail.jpg">
   
 
-	<meta name="description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+	<meta name="description" content="post for my forecasting attempt at predicting train traffic using MLP">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta property="og:image" content="">
@@ -117,34 +125,42 @@
   <article class="article-page">
   <div class="page-content">
     
+    <div class="page-cover-image">
+      <img class="page-image" src=/assets/img/project-noob-forecasting-mlp/forecast_thumbnail.jpg alt="Noob Forecasting using MLP">
+    </div> <!-- End Page Cover Image -->
     
     <div class="wrap-content">
       <header class="header-page">
-        <h1 class="page-title">Welcome to Jekyll!</h1>
-        <div class="page-date"><span>2017, Apr 06&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+        <h1 class="page-title">Noob Forecasting using MLP</h1>
+        <div class="page-date"><span>2018, Jan 25&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
       </header>
-      <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+      <p>Accenture also hosted a forecasting challenge in which I had no interest in, until I saw it had a cash prize of 60,000 pesos… WTF, I am in.</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>First time for me doing a time-series forecast, so I kind of know my limitations in where I should be devoting my effort. I dont know shit about diagnosing timeseries data and what correspoding model to use. I dont know how to interpret different time-series model such as arima, sarima or VEC, or how they work (yikes). Alas this has forced me to use the most blackboxy abstract model to which I am very familiar with and that is neural netowrks. This give me the added benefit of handling multivariate data which would let me add more features. The dataset used is the same one I gathered in my [visualization project]https://ryanliwag.github.io/Visualizing-MRT-2017/</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<h2 id="data-preperation">Data Preperation</h2>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<h2 id="building-baseline-models">Building Baseline Models</h2>
 
-<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+<h2 id="model-building">Model Building</h2>
 
+<h2 id="final-results">Final Results</h2>
 
       <div class="page-footer">
         <div class="page-share">
-          <a href="https://twitter.com/intent/tweet?text=Welcome to Jekyll!&url=http://localhost:4000/welcome-to-jekyll/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
-          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/welcome-to-jekyll/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
-          <a href="https://plus.google.com/share?url=http://localhost:4000/welcome-to-jekyll/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+          <a href="https://twitter.com/intent/tweet?text=Noob Forecasting using MLP&url=http://localhost:4000/Noob-Forecasting-MLP/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/Noob-Forecasting-MLP/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost:4000/Noob-Forecasting-MLP/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
         </div>
         <div class="page-tag">
+          
+            <a href="/tags#Neural Networks" class="tag">&#35; Neural Networks</a>
+          
+            <a href="/tags#Time-Series Forecasting" class="tag">&#35; Time-Series Forecasting</a>
+          
+            <a href="/tags#MLP" class="tag">&#35; MLP</a>
+          
+            <a href="/tags#LSTM" class="tag">&#35; LSTM</a>
           
         </div>
       </div>

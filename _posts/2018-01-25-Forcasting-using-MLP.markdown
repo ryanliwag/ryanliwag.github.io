@@ -163,8 +163,8 @@ Again with the persistance model as my baseline mse it scored **0.078**, while t
 
 If I wasnt limited with the extraction of data (I only have 3 months and a half) due to it being in weird excel format, and I would have liked to see the result if I include yearly data. Cause I tried plotting the total traffic and they do change over the months. Also trying a different neural network such as LSTM might be helpfull, possibly because prediction in forcast relies on historical context.
 
-Download the whole dataset from here:
+Download the whole dataset from here: https://drive.google.com/drive/folders/1D0eYzBV4jewEIosX7F-iOIFUMgk6TvrD?usp=sharing
 
-Data Cleaning process on this notebook:
+Data Cleaning process on this notebook: https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/Data%20Cleaning.ipynb
 
-Model building process on this notebook:
+Model building process on this notebook: https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/MLP_model.ipynb

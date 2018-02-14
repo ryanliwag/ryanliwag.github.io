@@ -152,15 +152,69 @@
 
 <p>I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarmia or VEC work (yikes).</p>
 
-<p>This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my <a href="https://ryanliwag.github.io/Visualizing-MRT-2017/">visualization entry</a>. The hourly data I have is sadly in excel format, making it troublesome to extract data, that’s why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing (85:10:5)</p>
+<p>This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my <a href="https://ryanliwag.github.io/Visualizing-MRT-2017/">visualization entry</a>. The hourly data I have is sadly in excel format, making it troublesome to extract data, that’s why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing.</p>
 
 <p>Features to use (Inputs to the model)</p>
 <ul>
   <li>Week of the month</li>
   <li>Day of the Week</li>
   <li>Holiday</li>
+  <li>Week of the Month</li>
   <li>Amount of People previous Hour</li>
 </ul>
+
+<p>So the goal is to turn this into a regression problem, where I have a set of inputs ready to predict the next output.</p>
+
+<h4 id="sample-data">Sample Data</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Outputs</th>
+      <th>Hour</th>
+      <th>Day</th>
+      <th>Holiday</th>
+      <th>Week</th>
+      <th>Shifted Output</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>689</td>
+      <td>7</td>
+      <td>6</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>418.0</td>
+    </tr>
+    <tr>
+      <td>926</td>
+      <td>8</td>
+      <td>6</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>689.0</td>
+    </tr>
+    <tr>
+      <td>1283</td>
+      <td>9</td>
+      <td>6</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>926.0</td>
+    </tr>
+    <tr>
+      <td>1903</td>
+      <td>10</td>
+      <td>6</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>1283.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The table above shows the columns that will be used as input to the MLP model, the “Outputs” columns will be the value they try to predict. The data currently available spans from January 1 till April 12.</p>
 
 <h3 id="step-2-building-a-persistance-model">Step 2: Building a Persistance Model</h3>
 
@@ -316,11 +370,11 @@
 
 <p>If I wasnt limited with the extraction of data (I only have 3 months and a half) due to it being in weird excel format, and I would have liked to see the result if I include yearly data. Cause I tried plotting the total traffic and they do change over the months. Also trying a different neural network such as LSTM might be helpfull, possibly because prediction in forcast relies on historical context.</p>
 
-<p>Download the whole dataset from here:</p>
+<p>Download the whole dataset from <a href="https://drive.google.com/drive/folders/1D0eYzBV4jewEIosX7F-iOIFUMgk6TvrD?usp=sharing">here</a></p>
 
-<p>Data Cleaning process on this notebook:</p>
+<p>Data Cleaning process on this <a href="https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/Data%20Cleaning.ipynb">notebook</a></p>
 
-<p>Model building process on this notebook:</p>
+<p>Model building process on this <a href="https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/MLP_model.ipynb">notebook</a></p>
 
       <div class="page-footer">
         <div class="page-share">

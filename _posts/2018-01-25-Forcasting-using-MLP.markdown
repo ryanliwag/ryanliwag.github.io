@@ -23,13 +23,27 @@ These steps serves as my guide to planning out the project, this is by no means 
 
 I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarmia or VEC work (yikes).
 
-This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my [visualization entry](https://ryanliwag.github.io/Visualizing-MRT-2017/). The hourly data I have is sadly in excel format, making it troublesome to extract data, that's why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing (85:10:5)
+This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my [visualization entry](https://ryanliwag.github.io/Visualizing-MRT-2017/). The hourly data I have is sadly in excel format, making it troublesome to extract data, that's why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing.
 
  Features to use (Inputs to the model)
  - Week of the month
  - Day of the Week
  - Holiday
+ - Week of the Month
  - Amount of People previous Hour
+
+So the goal is to turn this into a regression problem, where I have a set of inputs ready to predict the next output.
+
+#### Sample Data
+
+| Outputs | Hour | Day | Holiday | Week | Shifted Output |
+| ------ | ------ | ------ | ------ | ------ |
+|689|	7|	6|	1.0|	1|	418.0|
+|926|	8|	6|	1.0|	1|	689.0|
+|1283|	9|	6|	1.0|	1|	926.0|
+|1903|10|	6|	1.0|	1|	1283.0|
+
+The table above shows the columns that will be used as input to the MLP model, the "Outputs" columns will be the value they try to predict. The data currently available spans from January 1 till April 12.
 
 ### Step 2: Building a Persistance Model
 
@@ -163,8 +177,8 @@ Again with the persistance model as my baseline mse it scored **0.078**, while t
 
 If I wasnt limited with the extraction of data (I only have 3 months and a half) due to it being in weird excel format, and I would have liked to see the result if I include yearly data. Cause I tried plotting the total traffic and they do change over the months. Also trying a different neural network such as LSTM might be helpfull, possibly because prediction in forcast relies on historical context.
 
-Download the whole dataset from here: https://drive.google.com/drive/folders/1D0eYzBV4jewEIosX7F-iOIFUMgk6TvrD?usp=sharing
+Download the whole dataset from [here](https://drive.google.com/drive/folders/1D0eYzBV4jewEIosX7F-iOIFUMgk6TvrD?usp=sharing)
 
-Data Cleaning process on this notebook: https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/Data%20Cleaning.ipynb
+Data Cleaning process on this [notebook](https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/Data%20Cleaning.ipynb)
 
-Model building process on this notebook: https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/MLP_model.ipynb
+Model building process on this [notebook](https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/MLP_model.ipynb)

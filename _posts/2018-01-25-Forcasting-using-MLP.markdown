@@ -7,7 +7,7 @@ img:  project-forecasting-mlp/forecast_thumbnail.jpg
 tags: [Neural Networks, Time-Series Forecasting, MLP, LSTM]
 ---
 
-Accenture also hosted a forecasting challenge in which I had no interest in, until I saw it had a cash prize of 60,000 pesos… WTF, I am in.  The goal of this forcast is to build a MLP model that can predict an hourly entries or exit on any given MRT station.
+Accenture has hosted a forecasting challenge in which I was shaky to try and participate, until I saw it had a cash prize of 60,000 pesos… So, I want to atleast try. The goal of this forcast is to build an MLP model that can predict an hourly entries or exit on any given MRT station.
 
 ### Steps
 
@@ -15,21 +15,21 @@ These steps serves as my guide to planning out the project, this is by no means 
 
  - step 1: Gather Data and Determine Features to use as Inputs
  - Step 2: Build a base model to compare metrics and results (Build a simple persistance model)
- - Step 3: Neural Network Model building. Use a large grid search to find good hyperparameters (Do this if you have no idea how to tune nerual networks)
- - Step 4: Finetune Neural Networks and compare results with base model(Persistance model)
+ - Step 3: Neural Network Model building. Use a large grid search to find good hyperparameters (I dont have a deep understanding on effects of hyperparameters)
+ - Step 4: Finetune Neural Networks and compare validation results with Persistance model
  - Step 5: Try its Performance on the test set.
 
 ### Step 1: Gathering Data and Determining Feature Inputs
 
-I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarmia or VEC work (yikes).
+I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarima or VEC work (yikes).
 
-This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my [visualization entry](https://ryanliwag.github.io/Visualizing-MRT-2017/). The hourly data I have is sadly in excel format, making it troublesome to extract data, that's why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing.
+This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my [visualization entry](https://ryanliwag.github.io/Visualizing-MRT-2017/). The hourly data I have is sadly in excel format, making it troublesome to extract data, that's why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing. The hourly value being predicted here belongs to the North Avenue Station's Entry foot traffic.
 
  Features to use (Inputs to the model)
- - Week of the month
- - Day of the Week
- - Holiday
- - Week of the Month
+ - Hour (5:00 to 22:00)
+ - Day of the Week ( 1,2,3...7)
+ - Holiday (Will have a value of 1 if a holiday is present, 0 if no holiday)
+ - Week of the Month (1,2,3)
  - Amount of People previous Hour
 
 So the goal is to turn this into a regression problem, where I have a set of inputs ready to predict the next output.

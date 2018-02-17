@@ -134,7 +134,7 @@
         <h1 class="page-title">Forecasting Hourly MRT Traffic using MLP</h1>
         <div class="page-date"><span>2018, Jan 25&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
       </header>
-      <p>Accenture also hosted a forecasting challenge in which I had no interest in, until I saw it had a cash prize of 60,000 pesos… WTF, I am in.  The goal of this forcast is to build a MLP model that can predict an hourly entries or exit on any given MRT station.</p>
+      <p>Accenture has hosted a forecasting challenge in which I was shaky to try and participate, until I saw it had a cash prize of 60,000 pesos… So, I want to atleast try. The goal of this forcast is to build an MLP model that can predict an hourly entries or exit on any given MRT station.</p>
 
 <h3 id="steps">Steps</h3>
 
@@ -143,23 +143,23 @@
 <ul>
   <li>step 1: Gather Data and Determine Features to use as Inputs</li>
   <li>Step 2: Build a base model to compare metrics and results (Build a simple persistance model)</li>
-  <li>Step 3: Neural Network Model building. Use a large grid search to find good hyperparameters (Do this if you have no idea how to tune nerual networks)</li>
-  <li>Step 4: Finetune Neural Networks and compare results with base model(Persistance model)</li>
+  <li>Step 3: Neural Network Model building. Use a large grid search to find good hyperparameters (I dont have a deep understanding on effects of hyperparameters)</li>
+  <li>Step 4: Finetune Neural Networks and compare validation results with Persistance model</li>
   <li>Step 5: Try its Performance on the test set.</li>
 </ul>
 
 <h3 id="step-1-gathering-data-and-determining-feature-inputs">Step 1: Gathering Data and Determining Feature Inputs</h3>
 
-<p>I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarmia or VEC work (yikes).</p>
+<p>I havent had much experience dealing with forecasting models, so I am a bit aware of my sad limitations. Working on a tight schedule I had no time to study how to diagnose time-series data and which forecasting model to use with it. I have absolutely no idea how popular forecasting methods such as arima, sarima or VEC work (yikes).</p>
 
-<p>This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my <a href="https://ryanliwag.github.io/Visualizing-MRT-2017/">visualization entry</a>. The hourly data I have is sadly in excel format, making it troublesome to extract data, that’s why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing.</p>
+<p>This leave me to rely upon Neural Networks as my approach, the reasoning for this is that neural net can optimize highly non-linear functions and can also receive multiple inputs (Multivariate). For this forecast, I use a multilayer perceptron to biuld my neural network. I used the same data as the one I gathered to build my <a href="https://ryanliwag.github.io/Visualizing-MRT-2017/">visualization entry</a>. The hourly data I have is sadly in excel format, making it troublesome to extract data, that’s why I will only be working with 3 months of data. I do split the data into 3 pieces for my training, validation and testing. The hourly value being predicted here belongs to the North Avenue Station’s Entry foot traffic.</p>
 
 <p>Features to use (Inputs to the model)</p>
 <ul>
-  <li>Week of the month</li>
-  <li>Day of the Week</li>
-  <li>Holiday</li>
-  <li>Week of the Month</li>
+  <li>Hour (5:00 to 22:00)</li>
+  <li>Day of the Week ( 1,2,3…7)</li>
+  <li>Holiday (Will have a value of 1 if a holiday is present, 0 if no holiday)</li>
+  <li>Week of the Month (1,2,3)</li>
   <li>Amount of People previous Hour</li>
 </ul>
 

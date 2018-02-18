@@ -123,13 +123,19 @@
         <h1 class="page-title">Building an intuition towards GAN (Tensorflow)</h1>
         <div class="page-date"><span>2018, Feb 14&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
       </header>
-      <h2 id="generative-adversial-networks"><a href="https://arxiv.org/pdf/1710.07035.pdf">Generative Adversial Networks</a></h2>
+      <p>Post to help myself better articulate and understand GAN’s and thier current state.</p>
+
+<h2 id="generative-adversial-networks"><a href="https://arxiv.org/pdf/1710.07035.pdf">Generative Adversial Networks</a></h2>
 
 <p>GANs are a technique used for both semi-supervised and unsupervised learning. They are trained through a pair of networks in competition with each other. Gan’s analogy: there are 2 networks, one is the counterfeiter and the other one is the cop. The cop is trained to identify real from fake, while the counterfeiter tries to build more convincing fakes. The cop is known as the Discriminator and the counterfeiter is the Generator. In GANs the Generators have no access to real images, it only learns through the discriminator.</p>
 
 <h3 id="types-of-gans">Types of GAN’s</h3>
 
+<p>There are more variations of GAN’s, these are just the few that I read</p>
+
 <h4 id="fully-connected-gans">Fully Connected GANs</h4>
+
+<p><img src="/assets/img/project-understanding-GAN/gan.png" alt="GAN" /></p>
 
 <p>The first types of GAN architectures used fully connected neural netwokrks for both the generator and discriminator.</p>
 
@@ -139,11 +145,15 @@
 
 <h4 id="conditional-gans">Conditional GANs</h4>
 
+<p><img src="/assets/img/project-understanding-GAN/cgan.png" alt="CGAN" /></p>
+
 <p>These Types of GAN’s implement a conditional setting where both generator and discriminator are conditioned to some class label y. Its architecture is to feed y inyo both Generator and discriminator additional input, such that y and X will combine in a hidden representation.</p>
 
 <h4 id="gans-with-inference-models">GANs with Inference Models</h4>
 
-<h4 id="adversial-autoencoders">Adversial Autoencoders</h4>
+<p><img src="/assets/img/project-understanding-GAN/BiGan.png" alt="BIGAN" /></p>
+
+<p>Previous implementations of GANs did not have a way to map the input obeservation to vector. Here the generators consist of 2 netowkrs, and encoder and decdoer. The encoder is what wuold be referred to as the inference network. They are jointly trained, and given to the discriminator to receive pairs of (x,z) vectors.</p>
 
       <div class="page-footer">
         <div class="page-share">

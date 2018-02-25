@@ -114,7 +114,8 @@
   </footer> <!-- End Footer -->
 </aside> <!-- End Sidebar -->
 <div class="content-box clearfix">
-  <article class="article-page">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+<article class="article-page">
   <div class="page-content">
     
     
@@ -154,6 +155,129 @@
 <p><img src="/assets/img/project-understanding-GAN/BiGan.png" alt="BIGAN" /></p>
 
 <p>Previous implementations of GANs did not have a way to map the input obeservation to vector. Here the generators consist of 2 netowkrs, and encoder and decdoer. The encoder is what wuold be referred to as the inference network. They are jointly trained, and given to the discriminator to receive pairs of (x,z) vectors.</p>
+
+<h4 id="simple-gan-python-implementation-mnist">Simple GAN python implementation (MNIST)</h4>
+
+<p>GAN’s dont need labels, and training the generator is all that matters. Discriminator needs to recieve 2 inputs, one from the generator and another from the original image. Random noise is fed as input towards the generator.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#Model Parameters</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.0002</span>
+
+<span class="c"># Network Parameters</span>
+<span class="n">input_dim</span> <span class="o">=</span> <span class="mi">784</span> <span class="c"># 28 x 28</span>
+<span class="n">generator_hidden</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">discriminator_hidden</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">noise_dim</span> <span class="o">=</span> <span class="mi">100</span> <span class="c"># Noise input</span>
+
+<span class="k">def</span> <span class="nf">glorot_init</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">1.</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))</span>
+
+<span class="c"># Store layers weight &amp; bias</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'gen_hidden1'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">glorot_init</span><span class="p">([</span><span class="n">noise_dim</span><span class="p">,</span> <span class="n">generator_hidden</span><span class="p">])),</span>
+    <span class="s">'gen_out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">glorot_init</span><span class="p">([</span><span class="n">generator_hidden</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">])),</span>
+    <span class="s">'disc_hidden1'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">glorot_init</span><span class="p">([</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">discriminator_hidden</span><span class="p">])),</span>
+    <span class="s">'disc_out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">glorot_init</span><span class="p">([</span><span class="n">discriminator_hidden</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+<span class="p">}</span>
+<span class="n">biases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'gen_hidden1'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">generator_hidden</span><span class="p">])),</span>
+    <span class="s">'gen_out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">input_dim</span><span class="p">])),</span>
+    <span class="s">'disc_hidden1'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">discriminator_hidden</span><span class="p">])),</span>
+    <span class="s">'disc_out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">1</span><span class="p">])),</span>
+<span class="p">}</span>
+
+<span class="c"># Generator</span>
+<span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="s">'gen_hidden1'</span><span class="p">])</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">biases</span><span class="p">[</span><span class="s">'gen_hidden1'</span><span class="p">])</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">)</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="s">'gen_out'</span><span class="p">])</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">out_layer</span><span class="p">,</span> <span class="n">biases</span><span class="p">[</span><span class="s">'gen_out'</span><span class="p">])</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">out_layer</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_layer</span>
+
+<span class="c"># Discriminator</span>
+<span class="k">def</span> <span class="nf">discriminator</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="s">'disc_hidden1'</span><span class="p">])</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">biases</span><span class="p">[</span><span class="s">'disc_hidden1'</span><span class="p">])</span>
+    <span class="n">hidden_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">)</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="s">'disc_out'</span><span class="p">])</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">out_layer</span><span class="p">,</span> <span class="n">biases</span><span class="p">[</span><span class="s">'disc_out'</span><span class="p">])</span>
+    <span class="n">out_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">out_layer</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_layer</span>
+
+    <span class="c"># Network Inputs</span>
+    <span class="n">gen_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">noise_dim</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">'input_noise'</span><span class="p">)</span>
+    <span class="n">disc_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">'disc_input'</span><span class="p">)</span>
+
+    <span class="c"># Build Generator Network</span>
+    <span class="n">gen_sample</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">gen_input</span><span class="p">)</span>
+
+    <span class="c"># Build 2 Discriminator Networks (one from noise input, one from generated samples)</span>
+    <span class="n">disc_real</span> <span class="o">=</span> <span class="n">discriminator</span><span class="p">(</span><span class="n">disc_input</span><span class="p">)</span>
+    <span class="n">disc_fake</span> <span class="o">=</span> <span class="n">discriminator</span><span class="p">(</span><span class="n">gen_sample</span><span class="p">)</span>
+
+
+    <span class="c"># Build Loss</span>
+    <span class="n">gen_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">disc_fake</span><span class="p">))</span>
+    <span class="n">disc_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">disc_real</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">disc_fake</span><span class="p">))</span>
+
+    <span class="c"># Build Optimizers</span>
+    <span class="n">optimizer_gen</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">optimizer_disc</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+
+    <span class="c"># Training Variables for each optimizer</span>
+    <span class="c"># By default in TensorFlow, all variables are updated by each optimizer, so we</span>
+    <span class="c"># need to precise for each one of them the specific variables to update.</span>
+    <span class="c"># Generator Network Variables</span>
+    <span class="n">gen_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">weights</span><span class="p">[</span><span class="s">'gen_hidden1'</span><span class="p">],</span> <span class="n">weights</span><span class="p">[</span><span class="s">'gen_out'</span><span class="p">],</span>
+                <span class="n">biases</span><span class="p">[</span><span class="s">'gen_hidden1'</span><span class="p">],</span> <span class="n">biases</span><span class="p">[</span><span class="s">'gen_out'</span><span class="p">]]</span>
+    <span class="c"># Discriminator Network Variables</span>
+    <span class="n">disc_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">weights</span><span class="p">[</span><span class="s">'disc_hidden1'</span><span class="p">],</span> <span class="n">weights</span><span class="p">[</span><span class="s">'disc_out'</span><span class="p">],</span>
+                <span class="n">biases</span><span class="p">[</span><span class="s">'disc_hidden1'</span><span class="p">],</span> <span class="n">biases</span><span class="p">[</span><span class="s">'disc_out'</span><span class="p">]]</span>
+
+    <span class="c"># Create training operations</span>
+    <span class="n">train_gen</span> <span class="o">=</span> <span class="n">optimizer_gen</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">gen_loss</span><span class="p">,</span> <span class="n">var_list</span><span class="o">=</span><span class="n">gen_vars</span><span class="p">)</span>
+    <span class="n">train_disc</span> <span class="o">=</span> <span class="n">optimizer_disc</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">disc_loss</span><span class="p">,</span> <span class="n">var_list</span><span class="o">=</span><span class="n">disc_vars</span><span class="p">)</span>
+
+    <span class="c"># Initialize the variables (i.e. assign their default value)</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">X_values</span><span class="p">))</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+    <span class="n">batched_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+
+
+    <span class="n">iterator</span> <span class="o">=</span> <span class="n">batched_dataset</span><span class="o">.</span><span class="n">make_one_shot_iterator</span><span class="p">()</span>
+    <span class="n">next_element</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="n">get_next</span><span class="p">()</span>
+
+
+    <span class="c"># Start training</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+
+        <span class="c"># Run the initializer</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c"># Prepare Data</span>
+            <span class="c"># Get the next batch of MNIST data (only images are needed, not labels)</span>
+            <span class="n">batch_x</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">next_element</span><span class="p">)</span>
+            <span class="c"># Generate noise to feed to the generator</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">noise_dim</span><span class="p">])</span>
+
+            <span class="c"># Train</span>
+            <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">disc_input</span><span class="p">:</span> <span class="n">batch_x</span><span class="p">,</span> <span class="n">gen_input</span><span class="p">:</span> <span class="n">z</span><span class="p">}</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">gl</span><span class="p">,</span> <span class="n">dl</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_gen</span><span class="p">,</span> <span class="n">train_disc</span><span class="p">,</span> <span class="n">gen_loss</span><span class="p">,</span> <span class="n">disc_loss</span><span class="p">],</span>
+                                    <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">'Step </span><span class="si">%</span><span class="s">i: Generator Loss: </span><span class="si">%</span><span class="s">f, Discriminator Loss: </span><span class="si">%</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">gl</span><span class="p">,</span> <span class="n">dl</span><span class="p">))</span>
+
+
+</code></pre></div></div>
 
       <div class="page-footer">
         <div class="page-share">

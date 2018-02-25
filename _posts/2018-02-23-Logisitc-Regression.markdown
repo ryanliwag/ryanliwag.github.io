@@ -71,4 +71,4 @@ so the steps required to complete the process is
 
 5- Steps 2-3 will repeat for number of set iterations, and will keep adjusting the weigths, ideally untill no error can no longer be significantly reduced.
 
-Full Python code for [logistic regression binary classification] implemented on numpy on the wine dataset
+Full Python code for [logistic regression binary classification](https://github.com/ryanliwag/ryanliwag.github.io/blob/master/notebooks/logistic-regression.ipynb) implemented on the breast cancer dataset

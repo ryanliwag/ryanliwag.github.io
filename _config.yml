@@ -1,39 +1,89 @@
-title: Personal websites for projects
-description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-permalink: ':title/'
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://ryanliwag.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
-site-twitter: #if your site has a twitter account, enter it here
+title: 
+description: nothing too bad
+disqus_shortname: 
+reading_time:     true
+words_per_minute: 200
+# Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
+# When testing locally leave blank or use http://localhost:4000
+url: "https://ryanliwag.github.io/"
 
-# Author Settings
-author: Ryan Liwag # add your name
-author-img: main_pic.jpg # add your photo
-about-author: Working as a Data Analyst. I love anime and machine learning. The only reason that I keep this static site up is to document any learnings or projects.
-twitter: https://twitter.com/ryanorchous
-facebook: https://www.facebook.com/ryan.joshua.75
-github: ryanliwag # add your Github handle
-linkedin: https://www.linkedin.com/in/ryan-joshua-liwag-4a6124138/
-email: rjhontomin@gmail.com
+# Owner/author information
+owner:
+  name: Ryan Liwag
+  avatar:         avatar.jpg
+  bio: "I like reading about AI and I plan on posting my shitty thoughts here"
+  email: rjhontomin@gmail.com
+  # Social networking links used in footer. Update and remove as you like.
+  twitter:        
+  facebook:       
+  github:         
+  stackexchange:  
+  linkedin:       
+  instagram:      
+  flickr:         
+  tumblr:         
+  # google plus id, include the '+', eg +mmistakes
+  google_plus:
 
-# Disqus
-discus-identifier:  # add your discus identifier
+# Background image to be tiled on all pages
+background: ghostintheshell.jpg
 
-# Tracker
-analytics: # Google Analytics
+# Analytics and webmaster tools stuff goes here
+google_analytics:   
+google_verify:      
+# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
+bing_verify:         
 
-# Build Settings
-markdown: kramdown
+# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone:    America/New_York
+future:      false  # publish future dated posts --  true, false (default) 
+highlighter: rouge
+markdown:    kramdown
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
-  - jemoji
+  - jekyll-gist
+  - jekyll-feed
+sass:
+  sass_dir: _sass
+  style: compressed
 
-paginate: 10
-paginate_path: "/page/:num"
+# https://github.com/mojombo/jekyll/wiki/Permalinks
+permalink:   /:categories/:title/
 
+# Amount of post to show on home page
+paginate: 4
 
+kramdown:
+  input: GFM
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
 
-exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock", "notebooks"]
+include: 
+  - .htaccess
+exclude: 
+  - "*.less"
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - CHANGELOG
+  - Capfile
+  - Gemfile
+  - Gruntfile.js
+  - LICENSE
+  - README
+  - Rakefile
+  - config
+  - gulpfile.js
+  - lib
+  - log
+  - node_modules
+  - package.json
+  - spec
+  - tmp

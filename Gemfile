@@ -1,5 +1,8 @@
-group :jekyll_plugins do
-  gem "jekyll-sitemap"
-  gem "jekyll-paginate"
-  gem "jemoji"
-end
+source "https://rubygems.org"
+
+gem "tzinfo-data"
+gem "jekyll", "~> 3.7"
+gem "jekyll-sitemap"
+gem "jekyll-feed"
+gem "jekyll-paginate"
+gem "jekyll-gist"

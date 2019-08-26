@@ -10,8 +10,8 @@ url: "https://ryanliwag.github.io/"
 # Owner/author information
 owner:
   name: Ryan Liwag
-  avatar:         avatar.jpg
-  bio: "I like reading about AI and I plan on posting my shitty thoughts here"
+  avatar: avatar.jpg
+  bio: "I am generally interested in AI and will be writing about my personal learning and projects here. Currently Working as a data analyst but I would love to try my hand in a software engineering role in the future :)"
   email: rjhontomin@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:        
@@ -19,7 +19,7 @@ owner:
   github:         
   stackexchange:  
   linkedin:       
-  instagram:      
+  instagram:        
   flickr:         
   tumblr:         
   # google plus id, include the '+', eg +mmistakes
@@ -36,7 +36,7 @@ bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    America/New_York
-future:      false  # publish future dated posts --  true, false (default) 
+future:      true  # publish future dated posts --  true, false (default) 
 highlighter: rouge
 markdown:    kramdown
 plugins:
@@ -52,7 +52,7 @@ sass:
 permalink:   /:categories/:title/
 
 # Amount of post to show on home page
-paginate: 4
+paginate: 3
 
 kramdown:
   input: GFM
